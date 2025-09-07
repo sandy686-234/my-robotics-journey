@@ -1,0 +1,6 @@
+t,event,task,x,y,deadline,note
+0.000,miss,0,,,15.000,deadline
+0.000,miss,1,,,30.000,deadline
+0.000,miss,2,,,45.000,deadline
+0.000,idle,,,,,
+0.001,end,,,,,all done
