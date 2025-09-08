@@ -1,94 +1,69 @@
-#!/usr/bin/env python3
-import csv, sys, math, pathlib
+import csv, sys, os
 import matplotlib.pyplot as plt
-from collections import defaultdict
+import datetime
 
 def load_trace(path):
-    rows = []
     with open(path, newline="") as f:
-        r = csv.DictReader(f)
-        for row in r:
-            rows.append(row)
-    return rows
-
-def to_float(s):
-    return float(s) if s not in ("", None) else None
-
-def analyze(rows):
-    # 任务级别统计
-    starts, finishes, deadlines, misses = {}, {}, {}, set()
-    poses = defaultdict(list)
-
-    for row in rows:
-        t = to_float(row["t"])
-        ev = row["event"]
-        task = row["task"]
-        x = to_float(row["x"]); y = to_float(row["y"])
-        ddl = to_float(row["deadline"]) if row["deadline"] else None
-
-        if task != "":
-            tid = int(task)
-            if ddl is not None:
-                deadlines[tid] = ddl
-            if ev == "start":
-                starts[tid] = t
-            elif ev == "finish":
-                finishes[tid] = t
-            elif ev == "miss":
-                misses.add(tid)
-
-        if ev == "pose" and task != "":
-            poses[int(task)].append((t, x, y))
-
-    # 指标
-    report = []
-    for tid in sorted(set(list(starts.keys()) + list(finishes.keys()) + list(deadlines.keys()) + list(misses))):
-        st = starts.get(tid)
-        fn = finishes.get(tid)
-        ddl = deadlines.get(tid)
-        miss = tid in misses
-        dur = (fn - st) if (fn is not None and st is not None) else None
-        lateness = None
-        if ddl is not None:
-            if fn is not None:
-                lateness = fn - ddl     # >0 表示迟到
-            elif miss:
-                lateness = math.nan
-        report.append((tid, st, fn, ddl, dur, miss, lateness))
-
-    return report, poses
-
-def print_report(report):
-    print("tid | start | finish | deadline | duration | miss | lateness")
-    for tid, st, fn, ddl, dur, miss, late in report:
-        print(f"{tid:>3} | {st!s:>6} | {fn!s:>6} | {ddl!s:>8} | {dur!s:>8} | {miss!s:>4} | {late!s}")
-
-def plot_gantt(report, out_png):
-    # 简单甘特图
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(7, 2 + 0.5*len(report)))
-    yticks, ylabels = [], []
-    for i,(tid, st, fn, ddl, _, miss, _) in enumerate(report):
-        y = i
-        yticks.append(y); ylabels.append(f"T{tid}")
-        if st is not None and fn is not None:
-            ax.broken_barh([(st, fn-st)], (y-0.3, 0.6), alpha=0.7, label="run" if i==0 else None)
-        if ddl is not None:
-            ax.vlines(ddl, y-0.4, y+0.4, colors="r", linestyles="--")
-    ax.set_xlabel("time (s)")
-    ax.set_yticks(yticks); ax.set_yticklabels(ylabels)
-    ax.grid(True, axis="x", alpha=0.3)
-    fig.tight_layout()
-    fig.savefig(out_png, dpi=180)
-    print(f"[OK] saved {out_png}")
+        return list(csv.DictReader(f))
 
 def main():
-    path = pathlib.Path(sys.argv[1] if len(sys.argv)>1 else "traces/trace_latest.csv")
+    if len(sys.argv) < 2:
+        print("Usage: python3 scripts/analyze_trace.py <trace.csv>")
+        sys.exit(1)
+
+    path = sys.argv[1]
     rows = load_trace(path)
-    report, poses = analyze(rows)
-    print_report(report)
-    out_png = path.with_suffix(".gantt.png")
-    plot_gantt(report, out_png)
+
+    # 提取任务执行信息
+    tasks = {}
+    for r in rows:
+        ev, tid = r["event"], r["task"]
+        if not tid: continue
+        tid = int(tid)
+        if tid not in tasks:
+            tasks[tid] = {"start": None, "finish": None, "deadline": float(r["deadline"]), "miss": False}
+        if ev == "start":
+            tasks[tid]["start"] = float(r["t"])
+        elif ev == "finish":
+            tasks[tid]["finish"] = float(r["t"])
+        elif ev == "miss":
+            tasks[tid]["miss"] = True
+
+    # 打印表格
+    print("tid | start | finish | deadline | duration | miss | lateness")
+    for tid, info in tasks.items():
+        dur = (info["finish"] - info["start"]) if (info["start"] and info["finish"]) else None
+        late = (info["finish"] - info["deadline"]) if info["finish"] else None
+        print(f"{tid:2d} | {info['start']} | {info['finish']} | {info['deadline']} | {dur} | {info['miss']} | {late}")
+
+    # 自动生成文件名
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+    base = os.path.splitext(os.path.basename(path))[0]
+    out_gantt = f"traces/{base}_{timestamp}.gantt.png"
+    out_summary = f"traces/{base}_{timestamp}.summary.csv"
+
+    os.makedirs("traces", exist_ok=True)
+
+    # 画 Gantt 图
+    fig, ax = plt.subplots()
+    for tid, info in tasks.items():
+        if info["start"] and info["finish"]:
+            ax.barh(tid, info["finish"] - info["start"], left=info["start"])
+        ax.axvline(info["deadline"], color="r", linestyle="--")
+    ax.set_xlabel("time (s)")
+    ax.set_ylabel("task id")
+    plt.savefig(out_gantt)
+    print(f"[OK] saved {out_gantt}")
+
+    # 导出 summary CSV
+    with open(out_summary, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["tid","start","finish","deadline","duration","miss","lateness"])
+        for tid, info in tasks.items():
+            dur = (info["finish"] - info["start"]) if (info["start"] and info["finish"]) else ""
+            late = (info["finish"] - info["deadline"]) if info["finish"] else ""
+            w.writerow([tid, info["start"], info["finish"], info["deadline"], dur, info["miss"], late])
+    print(f"[OK] saved {out_summary}")
 
 if __name__ == "__main__":
     main()
