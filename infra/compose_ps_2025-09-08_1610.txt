@@ -1,0 +1,3 @@
+NAME                  IMAGE                               COMMAND                  SERVICE            CREATED        STATUS                  PORTS
+developer-container   jderobot/robotics-academy:latest    "./entrypoint.sh -s"     robotics-academy   26 hours ago   Up 26 hours             0.0.0.0:1108->1108/tcp, [::]:1108->1108/tcp, 0.0.0.0:6080->6080/tcp, [::]:6080->6080/tcp, 0.0.0.0:7163-7164->7163-7164/tcp, [::]:7163-7164->7163-7164/tcp
+universe_db           jderobot/robotics-database:latest   "docker-entrypoint.s…"   my-postgres        26 hours ago   Up 26 hours (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
