@@ -1,0 +1,1 @@
+Command '['z3', '-smt2', 'runs/20250922-142142/pdc.smt2']' returned non-zero exit status 1.
