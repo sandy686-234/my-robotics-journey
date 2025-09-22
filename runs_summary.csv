@@ -1,0 +1,5 @@
+run,feasible,min_slack_s,miss,phi_all_bool_last,has_cert,has_trace
+20250916_171430,,,0,,0,0
+20250916_171647,,,0,,0,0
+20250922-133157,True,0.206,1,0,1,1
+20250922-142142,True,0.206,0,,1,1
