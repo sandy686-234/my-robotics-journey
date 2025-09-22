@@ -1,25 +1,64 @@
 #!/usr/bin/env python3
-import json,csv,pathlib
-rows=[]; root=pathlib.Path("runs")
+import json, csv, pathlib
+from json import JSONDecodeError
+
+root = pathlib.Path("runs")
+rows, skipped = [], []
+
+if not root.exists():
+    print("No runs/ directory found."); exit(0)
+
 for d in sorted(p for p in root.glob("*") if p.is_dir()):
-    cert=json.loads((d/"pdc_certificate.json").read_text())
-    feasible=cert.get("feasible",False)
-    windows=cert.get("windows",[])
-    min_slack=min((w["margin"] for w in windows), default=None)
-    miss=0; phi_all=""
-    tr=d/"trace_constrained.csv"
-    if tr.exists():
-        import csv as _csv
-        with tr.open() as f:
-            r=_csv.DictReader(f)
-            for row in r:
-                if row["event"]=="miss": miss+=1
-                phi_all=row.get("phi_all_bool",phi_all)
-    rows.append({"run":d.name,"feasible":feasible,
-                "min_slack_s":round(min_slack,3) if min_slack is not None else "",
-                "miss":miss,"phi_all_bool_last":phi_all})
-out=pathlib.Path("runs_summary.csv")
-with out.open("w",newline="") as f:
-    w=csv.DictWriter(f,fieldnames=rows[0].keys() if rows else ["run"])
+    cert_path = d / "pdc_certificate.json"
+    trace_path = d / "trace_constrained.csv"
+
+    feasible = ""; min_slack = ""; miss = 0; phi_all = ""
+
+    # 1) formal gate certificate (optional in legacy runs)
+    if cert_path.exists():
+        try:
+            cert = json.loads(cert_path.read_text())
+            feasible = cert.get("feasible", "")
+            wins = cert.get("windows", [])
+            if wins:
+                try:
+                    min_slack = min(w.get("margin", float("inf")) for w in wins)
+                    if min_slack == float("inf"): min_slack = ""
+                except Exception:
+                    min_slack = ""
+        except (JSONDecodeError, OSError) as e:
+            skipped.append(f"{d.name}: bad certificate ({e})")
+    else:
+        skipped.append(f"{d.name}: no pdc_certificate.json (legacy run)")
+
+    # 2) runtime trace (optional)
+    if trace_path.exists():
+        try:
+            with trace_path.open() as f:
+                rdr = csv.DictReader(f); last = None
+                for r in rdr:
+                    last = r
+                    if r.get("event") == "miss": miss += 1
+                if last: phi_all = last.get("phi_all_bool", "")
+        except Exception as e:
+            skipped.append(f"{d.name}: bad trace ({e})")
+
+    rows.append({
+        "run": d.name,
+        "feasible": feasible,
+        "min_slack_s": round(float(min_slack), 3) if min_slack not in ("", None) else "",
+        "miss": miss,
+        "phi_all_bool_last": phi_all,
+        "has_cert": int(cert_path.exists()),
+        "has_trace": int(trace_path.exists()),
+    })
+
+out = pathlib.Path("runs_summary.csv")
+with out.open("w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=list(rows[0].keys()) if rows else ["run"])
     w.writeheader(); w.writerows(rows)
-print("Wrote", out, "rows=",len(rows))
+
+print(f"Wrote {out} with {len(rows)} rows")
+if skipped:
+    print("Skipped notes:")
+    for s in skipped: print(" -", s)
