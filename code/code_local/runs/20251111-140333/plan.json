@@ -1,0 +1,27 @@
+{
+  "t0": 0.020087083,
+  "corridor": [
+    3.0,
+    5.0,
+    -0.2,
+    0.2
+  ],
+  "release_times": {},
+  "order": [
+    {
+      "a": "A_leg1",
+      "b": "B_leg2",
+      "first": "B"
+    },
+    {
+      "a": "A_leg2",
+      "b": "B_leg1",
+      "first": "A"
+    },
+    {
+      "a": "A_leg2",
+      "b": "B_leg2",
+      "first": "A"
+    }
+  ]
+}

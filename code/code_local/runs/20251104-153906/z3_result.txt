@@ -1,0 +1,1 @@
+Command '['z3', '-smt2', 'runs/20251104-153906/multi.smt2']' returned non-zero exit status 1.

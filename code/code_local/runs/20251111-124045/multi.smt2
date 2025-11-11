@@ -1,0 +1,36 @@
+(set-logic QF_LRA)
+(set-option :produce-unsat-cores true)
+(set-option :produce-models true)
+; window 0: [0.020044791, 32.020044791] lhs=13.355984 rhs=32.000000
+; window 1: [0.020044791, 33.020044791] lhs=26.725055 rhs=33.000000
+; window 2: [0.020044791, 54.020044791] lhs=41.317585 rhs=54.000000
+; window 3: [0.020044791, 66.020044791] lhs=56.142073 rhs=66.000000
+; window 4: [0.020044791, 76.020044791] lhs=72.117104 rhs=76.000000
+; window 5: [0.020044791, 88.020044791] lhs=84.655468 rhs=88.000000
+(declare-fun e_A_leg1 () Real)
+(declare-fun e_A_leg2 () Real)
+(declare-fun e_B_leg1 () Real)
+(declare-fun e_B_leg2 () Real)
+(assert (<= 0.020045 e_A_leg1))
+(assert (<= (+ e_A_leg1 14.592530 0.100000) 54.020045))
+(assert (<= 0.020045 e_A_leg2))
+(assert (<= (+ e_A_leg2 15.975031 0.100000) 76.020045))
+(assert (<= 0.020045 e_B_leg1))
+(assert (<= (+ e_B_leg1 14.824488 0.100000) 66.020045))
+(assert (<= 0.020045 e_B_leg2))
+(assert (<= (+ e_B_leg2 12.538364 0.100000) 88.020045))
+(assert (! (or (<= (+ e_A_leg1 14.592530 0.100000) e_B_leg1) (<= (+ e_B_leg1 14.824488 0.100000) e_A_leg1)) :named mutex_A_leg1_B_leg1))
+(define-fun A_leg1_before_B_leg1 () Bool (<= (+ e_A_leg1 14.592530 0.100000) e_B_leg1))
+(define-fun B_leg1_before_A_leg1 () Bool (<= (+ e_B_leg1 14.824488 0.100000) e_A_leg1))
+(assert (! (or (<= (+ e_A_leg1 14.592530 0.100000) e_B_leg2) (<= (+ e_B_leg2 12.538364 0.100000) e_A_leg1)) :named mutex_A_leg1_B_leg2))
+(define-fun A_leg1_before_B_leg2 () Bool (<= (+ e_A_leg1 14.592530 0.100000) e_B_leg2))
+(define-fun B_leg2_before_A_leg1 () Bool (<= (+ e_B_leg2 12.538364 0.100000) e_A_leg1))
+(assert (! (or (<= (+ e_A_leg2 15.975031 0.100000) e_B_leg1) (<= (+ e_B_leg1 14.824488 0.100000) e_A_leg2)) :named mutex_A_leg2_B_leg1))
+(define-fun A_leg2_before_B_leg1 () Bool (<= (+ e_A_leg2 15.975031 0.100000) e_B_leg1))
+(define-fun B_leg1_before_A_leg2 () Bool (<= (+ e_B_leg1 14.824488 0.100000) e_A_leg2))
+(assert (! (or (<= (+ e_A_leg2 15.975031 0.100000) e_B_leg2) (<= (+ e_B_leg2 12.538364 0.100000) e_A_leg2)) :named mutex_A_leg2_B_leg2))
+(define-fun A_leg2_before_B_leg2 () Bool (<= (+ e_A_leg2 15.975031 0.100000) e_B_leg2))
+(define-fun B_leg2_before_A_leg2 () Bool (<= (+ e_B_leg2 12.538364 0.100000) e_A_leg2))
+(check-sat)
+(get-value (e_A_leg1 e_A_leg2 e_B_leg1 e_B_leg2))
+(get-value (A_leg1_before_B_leg1 B_leg1_before_A_leg1 A_leg1_before_B_leg2 B_leg2_before_A_leg1 A_leg2_before_B_leg1 B_leg1_before_A_leg2 A_leg2_before_B_leg2 B_leg2_before_A_leg2))
