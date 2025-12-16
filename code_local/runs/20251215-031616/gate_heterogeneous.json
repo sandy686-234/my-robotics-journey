@@ -1,0 +1,130 @@
+{
+  "t0_mono": 1765768576.4000158,
+  "makespan": 64.07,
+  "schedules": {
+    "A": [
+      {
+        "task_id": "pickup_shelfB",
+        "start_time": 6.73,
+        "duration": 18.0,
+        "end_time": 24.73,
+        "goal": [
+          2.5,
+          1.0
+        ],
+        "deadline": 90.0
+      },
+      {
+        "task_id": "pickup_shelfA",
+        "start_time": 26.97,
+        "duration": 15.0,
+        "end_time": 41.97,
+        "goal": [
+          2.0,
+          0.0
+        ],
+        "deadline": 60.0
+      }
+    ],
+    "B": [
+      {
+        "task_id": "delivery_packing",
+        "start_time": 6.1,
+        "duration": 20.0,
+        "end_time": 26.1,
+        "goal": [
+          4.0,
+          -1.0
+        ],
+        "deadline": 100.0
+      },
+      {
+        "task_id": "battery_charge",
+        "start_time": 30.26,
+        "duration": 30.0,
+        "end_time": 60.260000000000005,
+        "goal": [
+          1.5,
+          0.5
+        ],
+        "deadline": 150.0
+      }
+    ],
+    "C": [
+      {
+        "task_id": "quality_inspect",
+        "start_time": 12.56,
+        "duration": 25.0,
+        "end_time": 37.56,
+        "goal": [
+          5.0,
+          0.5
+        ],
+        "deadline": 130.0
+      },
+      {
+        "task_id": "delivery_dock",
+        "start_time": 42.07,
+        "duration": 22.0,
+        "end_time": 64.07,
+        "goal": [
+          6.0,
+          -1.0
+        ],
+        "deadline": 140.0
+      }
+    ]
+  },
+  "resources": {
+    "corridor_1": {
+      "type": "mutex",
+      "rect": [
+        3.0,
+        5.0,
+        -0.5,
+        0.5
+      ],
+      "traversal_time": 15.0
+    },
+    "corridor_2": {
+      "type": "mutex",
+      "rect": [
+        2.0,
+        3.0,
+        0.8,
+        1.2
+      ],
+      "traversal_time": 12.0
+    },
+    "elevator": {
+      "type": "mutex",
+      "rect": [
+        4.0,
+        4.5,
+        -1.5,
+        -0.5
+      ],
+      "traversal_time": 10.0
+    },
+    "charging_station": {
+      "type": "capacity",
+      "limit": 2,
+      "rect": [
+        1.0,
+        2.0,
+        0.0,
+        1.0
+      ]
+    },
+    "loading_zone": {
+      "type": "mutex",
+      "rect": [
+        5.5,
+        6.5,
+        -1.5,
+        -0.5
+      ],
+      "traversal_time": 8.0
+    }
+  }
+}

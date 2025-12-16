@@ -1,0 +1,13 @@
+sat
+((e_A_leg1 28.725016)
+ (e_A_leg2 0.011621)
+ (e_B_leg1 43.417546)
+ (e_B_leg2 16.086652))
+((A_leg1_before_B_leg1 true)
+ (B_leg1_before_A_leg1 false)
+ (A_leg1_before_B_leg2 false)
+ (B_leg2_before_A_leg1 true)
+ (A_leg2_before_B_leg1 true)
+ (B_leg1_before_A_leg2 false)
+ (A_leg2_before_B_leg2 true)
+ (B_leg2_before_A_leg2 false))

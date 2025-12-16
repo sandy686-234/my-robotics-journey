@@ -1,0 +1,89 @@
+{
+  "t0_mono": 0.013192416,
+  "t0_wall": 1765275924.0042398,
+  "makespan": 71.399589,
+  "schedules": {
+    "A": [
+      {
+        "task_id": "A_leg0",
+        "start_time": 0.013192,
+        "duration": 13.355983741981122,
+        "end_time": 13.369175741981122,
+        "goal": [
+          2.0,
+          0.0
+        ],
+        "deadline": 32.013192416
+      },
+      {
+        "task_id": "A_leg1",
+        "start_time": 13.369176,
+        "duration": 14.592530290789545,
+        "end_time": 27.961706290789543,
+        "goal": [
+          4.0,
+          -1.0
+        ],
+        "deadline": 54.013192416
+      },
+      {
+        "task_id": "A_leg2",
+        "start_time": 27.961706,
+        "duration": 15.97503136102874,
+        "end_time": 43.93673736102874,
+        "goal": [
+          6.0,
+          0.5
+        ],
+        "deadline": 76.013192416
+      }
+    ],
+    "B": [
+      {
+        "task_id": "B_leg0",
+        "start_time": 19.644121,
+        "duration": 13.369070805767247,
+        "end_time": 33.01319180576725,
+        "goal": [
+          2.0,
+          0.6
+        ],
+        "deadline": 33.013192416
+      },
+      {
+        "task_id": "B_leg1",
+        "start_time": 44.036737,
+        "duration": 14.824488195400665,
+        "end_time": 58.861225195400664,
+        "goal": [
+          4.2,
+          0.0
+        ],
+        "deadline": 66.013192416
+      },
+      {
+        "task_id": "B_leg2",
+        "start_time": 58.861225,
+        "duration": 12.53836364962129,
+        "end_time": 71.3995886496213,
+        "goal": [
+          6.0,
+          0.4
+        ],
+        "deadline": 88.013192416
+      }
+    ]
+  },
+  "resources": {
+    "corridor_1": {
+      "type": "mutex",
+      "rect": [
+        3.0,
+        5.0,
+        -0.2,
+        0.2
+      ],
+      "traversal_time": 15.0
+    }
+  }
+}

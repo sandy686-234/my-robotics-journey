@@ -1,0 +1,25 @@
+sat
+(
+  (define-fun s_B_leg2 () Real
+    57.898047)
+  (define-fun s_B_leg0 () Real
+    19.655974)
+  (define-fun s_B_leg1 () Real
+    43.073559)
+  (define-fun s_A_leg2 () Real
+    27.973559)
+  (define-fun makespan () Real
+    70.436411)
+  (define-fun mutex_corridor_1_A_leg2_B_leg1 () Bool
+    (or (<= (+ s_A_leg2 15.0 0.1) s_B_leg1) (<= (+ s_B_leg1 15.0 0.1) s_A_leg2)))
+  (define-fun mutex_corridor_1_A_leg1_B_leg1 () Bool
+    (or (<= (+ s_A_leg1 15.0 0.1) s_B_leg1) (<= (+ s_B_leg1 15.0 0.1) s_A_leg1)))
+  (define-fun mutex_corridor_1_A_leg1_B_leg2 () Bool
+    (or (<= (+ s_A_leg1 15.0 0.1) s_B_leg2) (<= (+ s_B_leg2 15.0 0.1) s_A_leg1)))
+  (define-fun s_A_leg0 () Real
+    0.025045)
+  (define-fun s_A_leg1 () Real
+    13.381029)
+  (define-fun mutex_corridor_1_A_leg2_B_leg2 () Bool
+    (or (<= (+ s_A_leg2 15.0 0.1) s_B_leg2) (<= (+ s_B_leg2 15.0 0.1) s_A_leg2)))
+)

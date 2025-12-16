@@ -1,0 +1,47 @@
+{
+  "t0_mono": 0.011621166,
+  "t0_wall": 1764588795.036706,
+  "corridor": [
+    3.0,
+    5.0,
+    -0.2,
+    0.2
+  ],
+  "release_times": {
+    "A_leg2": 0.011621,
+    "B_leg1": 43.417546,
+    "B_leg2": 16.086652
+  },
+  "order": [
+    {
+      "a": "A_leg1",
+      "b": "B_leg2",
+      "first": "B"
+    },
+    {
+      "a": "A_leg2",
+      "b": "B_leg1",
+      "first": "A"
+    },
+    {
+      "a": "A_leg2",
+      "b": "B_leg2",
+      "first": "A"
+    },
+    {
+      "a": "B_leg1",
+      "b": "A_leg2",
+      "first": "A"
+    },
+    {
+      "a": "B_leg2",
+      "b": "A_leg1",
+      "first": "B"
+    },
+    {
+      "a": "B_leg2",
+      "b": "A_leg2",
+      "first": "A"
+    }
+  ]
+}

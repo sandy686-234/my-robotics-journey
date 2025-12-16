@@ -1,0 +1,249 @@
+{
+  "timestamp": 1765894955.0133948,
+  "makespan": 64.07,
+  "task_assignments": {
+    "pickup_shelfA": "A",
+    "pickup_shelfB": "A",
+    "delivery_packing": "B",
+    "delivery_dock": "C",
+    "quality_inspect": "C",
+    "battery_charge": "B"
+  },
+  "schedule": {
+    "Forklift": [
+      {
+        "task_id": "pickup_shelfB",
+        "description": "Pick heavy item from Shelf B",
+        "start_time": 6.73,
+        "duration": 18.0,
+        "end_time": 24.73,
+        "location": [
+          2.5,
+          1.0
+        ]
+      },
+      {
+        "task_id": "pickup_shelfA",
+        "description": "Pick heavy item from Shelf A",
+        "start_time": 26.97,
+        "duration": 15.0,
+        "end_time": 41.97,
+        "location": [
+          2.0,
+          0.0
+        ]
+      }
+    ],
+    "Courier": [
+      {
+        "task_id": "delivery_packing",
+        "description": "Deliver to packing station",
+        "start_time": 6.1,
+        "duration": 20.0,
+        "end_time": 26.1,
+        "location": [
+          4.0,
+          -1.0
+        ]
+      },
+      {
+        "task_id": "battery_charge",
+        "description": "Battery charging",
+        "start_time": 30.26,
+        "duration": 30.0,
+        "end_time": 60.260000000000005,
+        "location": [
+          1.5,
+          0.5
+        ]
+      }
+    ],
+    "Inspector": [
+      {
+        "task_id": "quality_inspect",
+        "description": "Quality inspection",
+        "start_time": 12.56,
+        "duration": 25.0,
+        "end_time": 37.56,
+        "location": [
+          5.0,
+          0.5
+        ]
+      },
+      {
+        "task_id": "delivery_dock",
+        "description": "Deliver to loading dock",
+        "start_time": 42.07,
+        "duration": 22.0,
+        "end_time": 64.07,
+        "location": [
+          6.0,
+          -1.0
+        ]
+      }
+    ]
+  },
+  "task_pool": {
+    "pickup_shelfA": {
+      "location": [
+        2.0,
+        0.0
+      ],
+      "duration": 15.0,
+      "deadline": 60.0,
+      "requires_capability": "heavy_lift",
+      "uses_resources": [
+        "corridor_1"
+      ],
+      "priority": 1,
+      "description": "Pick heavy item from Shelf A"
+    },
+    "pickup_shelfB": {
+      "location": [
+        2.5,
+        1.0
+      ],
+      "duration": 18.0,
+      "deadline": 90.0,
+      "requires_capability": "heavy_lift",
+      "uses_resources": [
+        "corridor_2"
+      ],
+      "priority": 1,
+      "description": "Pick heavy item from Shelf B"
+    },
+    "delivery_packing": {
+      "location": [
+        4.0,
+        -1.0
+      ],
+      "duration": 20.0,
+      "deadline": 100.0,
+      "requires_capability": "transport",
+      "uses_resources": [
+        "corridor_1",
+        "elevator"
+      ],
+      "priority": 2,
+      "description": "Deliver to packing station"
+    },
+    "delivery_dock": {
+      "location": [
+        6.0,
+        -1.0
+      ],
+      "duration": 22.0,
+      "deadline": 140.0,
+      "requires_capability": "transport",
+      "uses_resources": [
+        "corridor_1",
+        "loading_zone"
+      ],
+      "priority": 1,
+      "description": "Deliver to loading dock"
+    },
+    "quality_inspect": {
+      "location": [
+        5.0,
+        0.5
+      ],
+      "duration": 25.0,
+      "deadline": 130.0,
+      "requires_capability": "sensor",
+      "uses_resources": [],
+      "priority": 2,
+      "description": "Quality inspection"
+    },
+    "battery_charge": {
+      "location": [
+        1.5,
+        0.5
+      ],
+      "duration": 30.0,
+      "deadline": 150.0,
+      "requires_capability": null,
+      "uses_resources": [
+        "charging_station"
+      ],
+      "priority": 3,
+      "description": "Battery charging"
+    }
+  },
+  "robots": {
+    "Forklift": {
+      "id": "A",
+      "capabilities": [
+        "heavy_lift",
+        "transport"
+      ],
+      "speed": 0.5
+    },
+    "Courier": {
+      "id": "B",
+      "capabilities": [
+        "transport"
+      ],
+      "speed": 0.7
+    },
+    "Inspector": {
+      "id": "C",
+      "capabilities": [
+        "sensor",
+        "transport"
+      ],
+      "speed": 0.4
+    }
+  },
+  "resources": {
+    "corridor_1": {
+      "type": "mutex",
+      "rect": [
+        3.0,
+        5.0,
+        -0.5,
+        0.5
+      ],
+      "traversal_time": 15.0
+    },
+    "corridor_2": {
+      "type": "mutex",
+      "rect": [
+        2.0,
+        3.0,
+        0.8,
+        1.2
+      ],
+      "traversal_time": 12.0
+    },
+    "elevator": {
+      "type": "mutex",
+      "rect": [
+        4.0,
+        4.5,
+        -1.5,
+        -0.5
+      ],
+      "traversal_time": 10.0
+    },
+    "charging_station": {
+      "type": "capacity",
+      "limit": 2,
+      "rect": [
+        1.0,
+        2.0,
+        0.0,
+        1.0
+      ]
+    },
+    "loading_zone": {
+      "type": "mutex",
+      "rect": [
+        5.5,
+        6.5,
+        -1.5,
+        -0.5
+      ],
+      "traversal_time": 8.0
+    }
+  }
+}

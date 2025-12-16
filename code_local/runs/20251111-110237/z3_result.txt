@@ -1,0 +1,13 @@
+sat
+((e_A_leg1 (/ 1991.0 31250.0))
+ (e_A_leg2 (/ 1991.0 31250.0))
+ (e_B_leg1 (/ 16138743.0 1000000.0))
+ (e_B_leg2 (/ 16138743.0 1000000.0)))
+((A_leg1_before_B_leg1 true)
+ (B_leg1_before_A_leg1 false)
+ (A_leg1_before_B_leg2 true)
+ (B_leg2_before_A_leg1 false)
+ (A_leg2_before_B_leg1 true)
+ (B_leg1_before_A_leg2 false)
+ (A_leg2_before_B_leg2 true)
+ (B_leg2_before_A_leg2 false))

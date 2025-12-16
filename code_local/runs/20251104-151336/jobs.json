@@ -1,0 +1,52 @@
+{
+  "jobs": [
+    {
+      "agent": "A",
+      "name": "A_leg0",
+      "release": 0.012010333,
+      "deadline": 32.012010333,
+      "wcet": 14.570164082161222,
+      "uses_corridor": false
+    },
+    {
+      "agent": "A",
+      "name": "A_leg1",
+      "release": 0.012010333,
+      "deadline": 54.012010333,
+      "wcet": 15.919123953588594,
+      "uses_corridor": true
+    },
+    {
+      "agent": "A",
+      "name": "A_leg2",
+      "release": 0.012010333,
+      "deadline": 76.012010333,
+      "wcet": 17.427306939304078,
+      "uses_corridor": true
+    },
+    {
+      "agent": "B",
+      "name": "B_leg0",
+      "release": 0.012010333,
+      "deadline": 33.012010333,
+      "wcet": 14.584440879018814,
+      "uses_corridor": false
+    },
+    {
+      "agent": "B",
+      "name": "B_leg1",
+      "release": 0.012010333,
+      "deadline": 66.012010333,
+      "wcet": 16.172168940437086,
+      "uses_corridor": true
+    },
+    {
+      "agent": "B",
+      "name": "B_leg2",
+      "release": 0.012010333,
+      "deadline": 88.012010333,
+      "wcet": 13.678214890495951,
+      "uses_corridor": true
+    }
+  ]
+}

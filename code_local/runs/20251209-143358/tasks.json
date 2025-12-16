@@ -1,0 +1,114 @@
+{
+  "tasks": [
+    {
+      "agent": "A",
+      "task_id": "A_leg0",
+      "task_index": 0,
+      "release": 0.01335025,
+      "deadline": 32.01335025,
+      "wcet": 13.355983741981122,
+      "uses_resources": [],
+      "start_pos": [
+        0.0,
+        0.0
+      ],
+      "goal_pos": [
+        2.0,
+        0.0
+      ]
+    },
+    {
+      "agent": "A",
+      "task_id": "A_leg1",
+      "task_index": 1,
+      "release": 0.01335025,
+      "deadline": 54.01335025,
+      "wcet": 14.592530290789545,
+      "uses_resources": [
+        "corridor_1"
+      ],
+      "start_pos": [
+        2.0,
+        0.0
+      ],
+      "goal_pos": [
+        4.0,
+        -1.0
+      ]
+    },
+    {
+      "agent": "A",
+      "task_id": "A_leg2",
+      "task_index": 2,
+      "release": 0.01335025,
+      "deadline": 76.01335025,
+      "wcet": 15.97503136102874,
+      "uses_resources": [
+        "corridor_1"
+      ],
+      "start_pos": [
+        4.0,
+        -1.0
+      ],
+      "goal_pos": [
+        6.0,
+        0.5
+      ]
+    },
+    {
+      "agent": "B",
+      "task_id": "B_leg0",
+      "task_index": 0,
+      "release": 0.01335025,
+      "deadline": 33.01335025,
+      "wcet": 13.369070805767247,
+      "uses_resources": [],
+      "start_pos": [
+        0.0,
+        0.5
+      ],
+      "goal_pos": [
+        2.0,
+        0.6
+      ]
+    },
+    {
+      "agent": "B",
+      "task_id": "B_leg1",
+      "task_index": 1,
+      "release": 0.01335025,
+      "deadline": 66.01335025,
+      "wcet": 14.824488195400665,
+      "uses_resources": [
+        "corridor_1"
+      ],
+      "start_pos": [
+        2.0,
+        0.6
+      ],
+      "goal_pos": [
+        4.2,
+        0.0
+      ]
+    },
+    {
+      "agent": "B",
+      "task_id": "B_leg2",
+      "task_index": 2,
+      "release": 0.01335025,
+      "deadline": 88.01335025,
+      "wcet": 12.53836364962129,
+      "uses_resources": [
+        "corridor_1"
+      ],
+      "start_pos": [
+        4.2,
+        0.0
+      ],
+      "goal_pos": [
+        6.0,
+        0.4
+      ]
+    }
+  ]
+}
